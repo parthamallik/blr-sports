@@ -1142,7 +1142,7 @@ a {
 }
 .cid-t050Q6OIOb {
   padding-top: 6rem;
-  padding-bottom: 6rem;
+  padding-bottom: 2rem;
   background: #ffffff;
 }
 .cid-t050Q6OIOb .team-card {
@@ -1408,6 +1408,11 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+@media (max-width: 768px) {
+  .cid-t0k9pGoD7h .embla__button {
+    display: none;
+  }
 }
 .cid-t0k9pGoD7h .embla__button:disabled {
   cursor: default;
