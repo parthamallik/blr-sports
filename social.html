@@ -115,18 +115,22 @@
                             <strong>We got you covered. Use our watermark. Here is a sample below !</strong>
                             <br>
                             <strong>Grab yours now !</strong>
-                            
                         </h3>
                     </div>
-                    <div class="mbr-section-head align-center mb-4">
+                    <div class="mbr-section-head align-center  mb-4">
                         <form ref='uploadForm' id='uploadForm' action='https://bengaluru-sports-foundation.el.r.appspot.com/jatre-pic' method='post'
                             encType="multipart/form-data" name="formName">
                             <input type="file" name="profile-pic" />
-                            <input type='submit' value='Upload!' />
+                            <input type='submit' value='Upload!' /> 
                         </form>
                     </div>
+                    <div id= "spinner1" class="mbr-section-head align-center mb-4" style="display:none">
+                        <div class="spinner-border text-success align-center"></div>
+                    </div>
+                    
                     <div class="mbr-section-head align-center mb-4">
-                        <img id="img" src="assets/images/hema.jpeg" />
+                        <p id="download_p" style="display: none;">Click on the image to download !</p>
+                        <a href="assets/images/hema.jpeg" download="myJatre" id="downLoadLink1"><img id="img" src="assets/images/hema.jpeg"></img></a>
                     </div>
                 </div>
             </div>
@@ -231,12 +235,14 @@
     <script>
         $(function () {
             $(document).ready(function () {
-                $("#img").css('border', "solid 2px black")
-                .css('width', '50%').css('display', 'block')
+                $("#img").css('width', '50%').css('display', 'block')
                 .css('margin-left', 'auto').css('margin-right', 'auto');
             });
             $('#uploadForm').on("submit", function (e) {
                 e.preventDefault(); // cancel the actual submit
+                $("#img").attr('src', ``);
+                $('#spinner1').css('display', 'inherit');
+                $('#download_p').css('display', 'none');
                 $.ajax({
                     url: $('#uploadForm').attr('action'),
                     type: 'POST',
@@ -244,11 +250,17 @@
                     processData: false,
                     contentType: false,
                     success: function (response) {
-                        console.log(response);
                         $("#img").attr('src', `data:image/jpeg;base64,${response}`)
                         .css('width', '50%').css('display', 'block')
                         .css('margin-left', 'auto').css('margin-right', 'auto');
-                    }
+                        $('#spinner1').css('display', 'none');
+                        $('#downLoadLink1').attr('href', `data:image/jpeg;base64,${response}`);
+                        $('#download_p').css('display', 'inherit');
+                    },
+                    error: function (error) {
+                        alert('Something went wrong ! Try again !')
+                        $('#spinner1').css('display', 'none');
+                    } 
                 });
             });
         });
