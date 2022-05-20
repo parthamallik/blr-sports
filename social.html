@@ -117,20 +117,35 @@
                             <strong>Grab yours now !</strong>
                         </h3>
                     </div>
-                    <div class="mbr-section-head align-center  mb-4">
-                        <form ref='uploadForm' id='uploadForm' action='https://bengaluru-sports-foundation.el.r.appspot.com/jatre-pic' method='post'
-                            encType="multipart/form-data" name="formName">
-                            <input type="file" name="profile-pic" />
-                            <input type='submit' value='Upload!' /> 
-                        </form>
+                    <div class="mbr-section-head align-center mb-12">
+                        <div class="container">
+                            <div class="row mbr-white">
+                                <div class="col-4 col-lg-4">
+                                    <form ref='uploadForm' id='uploadForm' encType="multipart/form-data">
+                                        <input type="file" name="profile-pic" class="display-4 align-center" />
+                                    </form>
+                                </div>
+                                <div class="col-4 col-lg-4">
+                                    <div id="spinner1" class="mbr-section-head mb-4" style="display:none">
+                                        <div class="spinner-border text-success align-center"></div>
+                                    </div>
+                                </div>
+                                <div class="col-4 col-lg-4">
+                                    <div id="download_lnk" class="mbr-section-head" style="text-align: right; display: none;">
+                                        <a href="assets/images/hema.jpeg" class="btn-success btn-sm" download="myJatre" id="downLoad_btn" style="padding: 0.4rem 0.5rem;">Download</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div id= "spinner1" class="mbr-section-head align-center mb-4" style="display:none">
-                        <div class="spinner-border text-success align-center"></div>
+                    <div class="mbr-section-head align-center mb-4" style="margin-top: 20px;" >
+                        <div id="disclaim" style="display: none">
+                            <p style="color: brown;">** We do not store your image. If you wish to be featured in our social handles,
+                                please email (jatre@blrsports.org) us this image along with your social handle !</p>
+                        </div>
                     </div>
-                    
                     <div class="mbr-section-head align-center mb-4">
-                        <p id="download_p" style="display: none;">Click on the image to download !</p>
-                        <a href="assets/images/hema.jpeg" download="myJatre" id="downLoadLink1"><img id="img" src="assets/images/hema.jpeg"></img></a>
+                        <img id="img" src="assets/images/hema.jpeg"></img>
                     </div>
                 </div>
             </div>
@@ -235,32 +250,34 @@
     <script>
         $(function () {
             $(document).ready(function () {
-                $("#img").css('width', '50%').css('display', 'block')
+                $("#img").css('display', 'block')
                 .css('margin-left', 'auto').css('margin-right', 'auto');
-            });
-            $('#uploadForm').on("submit", function (e) {
-                e.preventDefault(); // cancel the actual submit
-                $("#img").attr('src', ``);
-                $('#spinner1').css('display', 'inherit');
-                $('#download_p').css('display', 'none');
-                $.ajax({
-                    url: $('#uploadForm').attr('action'),
-                    type: 'POST',
-                    data: new FormData($('#uploadForm')[0]),
-                    processData: false,
-                    contentType: false,
-                    success: function (response) {
-                        $("#img").attr('src', `data:image/jpeg;base64,${response}`)
-                        .css('width', '50%').css('display', 'block')
-                        .css('margin-left', 'auto').css('margin-right', 'auto');
-                        $('#spinner1').css('display', 'none');
-                        $('#downLoadLink1').attr('href', `data:image/jpeg;base64,${response}`);
-                        $('#download_p').css('display', 'inherit');
-                    },
-                    error: function (error) {
-                        alert('Something went wrong ! Try again !')
-                        $('#spinner1').css('display', 'none');
-                    } 
+
+                $('input[type=file]').change(function () {
+                    $("#img").attr('src', ``);
+                    $('#spinner1').css('display', 'inherit');
+                    $('#download_lnk').css('display', 'none');
+                    $('#disclaim').css('display', 'none');
+                    $.ajax({
+                        url: 'https://bengaluru-sports-foundation.el.r.appspot.com/jatre-pic',
+                        type: 'POST',
+                        data: new FormData($('#uploadForm')[0]),
+                        processData: false,
+                        contentType: false,
+                        success: function (response) {
+                            $("#img").attr('src', `data:image/jpeg;base64,${response}`)
+                                .css('display', 'block')
+                                .css('margin-left', 'auto').css('margin-right', 'auto');
+                            $('#spinner1').css('display', 'none');
+                            $('#downLoad_btn').attr('href', `data:image/jpeg;base64,${response}`);
+                            $('#download_lnk').css('display', 'inherit');
+                            $('#disclaim').css('display', 'inherit');
+                        },
+                        error: function (error) {
+                            alert('Something went wrong ! Try again !')
+                            $('#spinner1').css('display', 'none');
+                        }
+                    });
                 });
             });
         });
