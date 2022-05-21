@@ -120,19 +120,15 @@
                     <div class="mbr-section-head align-center mb-12">
                         <div class="container">
                             <div class="row mbr-white">
+                                <div class="col-4 col-lg-4"></div>
                                 <div class="col-4 col-lg-4">
                                     <form ref='uploadForm' id='uploadForm' encType="multipart/form-data">
                                         <input type="file" name="profile-pic" class="display-4 align-center" />
                                     </form>
                                 </div>
                                 <div class="col-4 col-lg-4">
-                                    <div id="spinner1" class="mbr-section-head mb-4" style="display:none; text-align: end;">
+                                    <div id="spinner1" class="mbr-section-head mb-4" style="display:none; text-align: right;">
                                         <div class="spinner-border text-success"></div>
-                                    </div>
-                                </div>
-                                <div class="col-4 col-lg-4">
-                                    <div id="download_lnk" class="mbr-section-head" style="text-align: right; display: none;">
-                                        <a href="assets/images/hema.jpeg" class="btn-success btn-sm" download="myJatre" id="downLoad_btn" style="padding: 0.4rem 0.5rem;">Download</a>
                                     </div>
                                 </div>
                             </div>
@@ -140,12 +136,29 @@
                     </div>
                     <div class="mbr-section-head align-center mb-4" style="margin-top: 20px;" >
                         <div id="disclaim" style="display: none">
-                            <p style="color: brown;">** We do not store your image. If you wish to be featured in our social handles,
-                                please email (jatre@blrsports.org) us this image along with your social handle !</p>
+                            <p style="color: brown;">** We do not store your images. If you wish to be featured in our social handles,
+                                please email these images to <a href="mailto:jatre@blrsports.org">our team</a> along with your social handle !</p>
                         </div>
                     </div>
                     <div class="mbr-section-head align-center mb-4">
-                        <img id="img" src="assets/images/hema.jpeg"></img>
+                        <div class="row mbr-white">
+                            <div class="col-6 col-lg-6">
+                                <div id="download_lnk1" class="mbr-section-head" style="text-align: right; display: none; margin-bottom: 5px;">
+                                    <a href="assets/images/hema.jpeg" class="btn-success btn-sm" download="myJatre" id="downLoad_btn1"
+                                        style="padding: 0.4rem 0.5rem;">Download</a>
+                                </div>
+                                <img id="img" src="assets/images/hema.jpeg" style="image-orientation: none;"></img>
+                                
+                            </div>
+                            <div class="col-6 col-lg-6">
+                                <div id="download_lnk2" class="mbr-section-head" style="text-align: right; display: none;  margin-bottom: 5px">
+                                    <a href="assets/images/hema.jpeg" class="btn-success btn-sm" download="myJatre" id="downLoad_btn2"
+                                        style="padding: 0.4rem 0.5rem;">Download</a>
+                                </div>
+                                <img id="img2" src="assets/images/hema.jpeg" style="image-orientation: none;"></img>
+                            </div>
+                            
+                        </div>
                     </div>
                 </div>
             </div>
@@ -255,22 +268,29 @@
 
                 $('input[type=file]').change(function () {
                     $("#img").attr('src', ``);
+                    $("#img2").attr('src', ``);
                     $('#spinner1').css('display', 'inherit');
-                    $('#download_lnk').css('display', 'none');
+                    $('#download_lnk1').css('display', 'none');
                     $('#disclaim').css('display', 'none');
                     $.ajax({
+                        url1: 'http://localhost:8080/jatre-pic',
                         url: 'https://bengaluru-sports-foundation.el.r.appspot.com/jatre-pic',
                         type: 'POST',
                         data: new FormData($('#uploadForm')[0]),
                         processData: false,
                         contentType: false,
                         success: function (response) {
-                            $("#img").attr('src', `data:image/jpeg;base64,${response}`)
+                            $("#img").attr('src', `data:image/jpeg;base64,${response.profile}`)
+                                .css('display', 'block')
+                                .css('margin-left', 'auto').css('margin-right', 'auto');
+                            $("#img2").attr('src', `data:image/jpeg;base64,${response.template}`)
                                 .css('display', 'block')
                                 .css('margin-left', 'auto').css('margin-right', 'auto');
                             $('#spinner1').css('display', 'none');
-                            $('#downLoad_btn').attr('href', `data:image/jpeg;base64,${response}`);
-                            $('#download_lnk').css('display', 'inherit');
+                            $('#downLoad_btn1').attr('href', `data:image/jpeg;base64,${response.profile}`);
+                            $('#download_lnk1').css('display', 'inherit');
+                            $('#downLoad_btn2').attr('href', `data:image/jpeg;base64,${response.template}`);
+                            $('#download_lnk2').css('display', 'inherit');
                             $('#disclaim').css('display', 'inherit');
                         },
                         error: function (error) {
