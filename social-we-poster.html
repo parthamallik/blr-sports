@@ -110,6 +110,12 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-12 mt-4" id="partha_credit">
+                        <p class="mbr-text mb-0 mbr-fonts-style copyright align-center display-7">
+                            © Developed by <a alt="Partha Pratim Mallik" href="https://www.instagram.com/yet.another.ultramarathoner/"
+                                target="_blank"> Partha Pratim Mallik </a>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -152,6 +158,7 @@
                     $('#spinner1').css('display', 'inherit');
                     $('#download_lnk1').css('display', 'none');
                     $('#disclaim').css('display', 'none');
+                    $('#partha_credit').css('display', 'none');
                     $.ajax({
                         url2: 'http://localhost:8080/jatre-pic-we-poster',
                         url: 'https://blrsports-backend.el.r.appspot.com/jatre-pic-we-poster',
@@ -166,6 +173,7 @@
                             $('#spinner1').css('display', 'none');
                             $('#downLoad_btn1').attr('href', `data:image/jpeg;base64,${response}`);
                             $('#download_lnk1').css('display', 'inherit');
+                            $('#partha_credit').css('display', 'inherit');
                             $('#disclaim').css('display', 'inherit');
                         },
                         error: function (error) {
