@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Jatre Finisher Picture</title>
+    <meta name="_token" content="{{ csrf_token() }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
+        crossorigin="anonymous" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Poppins" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha256-WqU1JavFxSAMcLP2WIOI+GB2zWmShMI82mTpLDcqFUg=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.css"
+        integrity="sha256-jKV9n9bkk/CTP8zbtEtnKaKf+ehRovOYeKoyfthwbC8=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.js"
+        integrity="sha256-CgvH7sz3tHhkiVKh05kSUgG97YtzYNnWt6OXcmYzqHY=" crossorigin="anonymous"></script>
+</head>
+<style type="text/css">
+    img {
+        display: block;
+        max-width: 100%;
+    }
+
+    .preview {
+        overflow: hidden;
+        width: 160px;
+        height: 160px;
+        margin: 10px;
+        border: 1px solid #D01665;
+    }
+
+    .modal-lg {
+        max-width: 1000px !important;
+    }
+</style>
+
+<body style="font-family: 'Poppins';">
+    <div class="container">
+        <h2 style="text-align:center;margin-top: 30px;color: #00B0EF;">Enter your Bib number and upload your favorite
+            picture</h2>
+        <h3 style="text-align:center; color: #D01665;">We will create a personalised Jatre finisher image for you !</h3>
+        <form id='uploadForm' method="post">
+
+            <div class="container">
+                <div class="row" style="text-align:center;margin-top: 30px;">
+                    <div class="col-sm" style="margin-left: 12%;">
+                        <input type="file" name="image" class="image">
+                    </div>
+                </div>
+                <div class="row" style="text-align:center;margin-top: 30px;">
+                    <div class="col-4 col-lg-4" style="margin-left: 30%;">
+                        <div id="spinner1" class="mbr-section-head mb-4" style="display:none;">
+                            <div class="spinner-border text-success"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mbr-section-head align-center mb-4">
+                    <div class="row mbr-white">
+                        <div class="col-12 col-lg-12">
+                            <img id="finisher-img" style="image-orientation: none;"></img>
+                        </div>
+                    </div>
+                </div>
+                <div class="mbr-section-head align-center mb-4" style="margin-top: 20px;">
+                    <div id="disclaim" style="display: none">
+                        <p style="color: brown;">** We do not keep your images. If you wish to be featured in our social
+                            handles,
+                            please email the image to <a href="mailto:reach@blrsports.org">our team</a> along with your
+                            social handle !
+                        </p>
+                    </div>
+                </div>
+                <div class="col-12 mt-4" id="cpc_credit" style="padding-bottom:50px;">
+                    <div id="download_lnk1" class="mbr-section-head"
+                        style="text-align: center; display: none; margin-bottom: 1rem;">
+                        <a href="" class="btn-success btn-lg" download="i-ran-jatre" id="downLoad_btn1"
+                            style="padding: 0.5rem 2rem; background-color:#8DC73D;">Download</a>
+
+                        <a href="" class="btn-success btn-lg" id="start_over"
+                            style="padding: 0.5rem 2rem; background-color:#D01665; margin-left: 2%;">Start over</a>
+                    </div>
+                    <p class="mbr-text mb-0 mbr-fonts-style copyright display-7"
+                        style="margin-top: 4%; text-align: center;">
+                        © Developed by <a alt="CleverPath Consulting" href="https://cleverpathconsulting.com"
+                            target="_blank"> CleverPath Consulting </a>
+                    </p>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Crop based on your need ! </h5>
+
+                    <label for="html" style="margin: 0% 1% 0% 9%; ">Instagram post</label><br>
+                    <input type="radio" id="post" name="sel_style" value="POST" style="margin-top: 0.5%;">
+                    <label for="css" style="margin: 0% 1% 0% 4%;">Instagram story</label><br>
+                    <input type="radio" id="story" name="sel_style" value="STORY" style="margin-top: 0.5%;"
+                        checked="checked">
+                    <label for="javascript" style="margin: 0% 1% 0% 4%;">Custom</label>
+                    <input type="radio" id="custom" name="sel_style" value="CUSTOM" style="margin-top: 0.5%;">
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="img-container">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <img id="image" src="">
+                            </div>
+                            <div class="col-md-4">
+                                <div class="preview"></div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <div class="alert alert-danger" id="show_error">Please enter BIB Number </div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <input type="text" placeholder="BIB No" id="bib-number" name="name"
+                        class="u-input u-input-rectangle" size="10%">
+                    <label for="trans">Layer transperancy</label>
+                    <input type="range" id="trans" name="trans" min="1" max="100">
+                    <button type="button" class="btn btn-primary" id="crop" style="background-color: #063761;">Get my
+                        picture</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+    </div>
+    <script>
+
+        var $modal = $('#modal');
+        $modal.modal({
+            show: false,
+            backdrop: 'static'
+        });
+        var image = document.getElementById('image');
+        var cropper;
+        $("#finisher-img").attr('src', ``);
+        $('#download_lnk1').css('display', 'none');
+        $('#cpc_credit').css('display', 'none');
+
+        $("body").on("change", ".image", function (e) {
+            var files = e.target.files;
+            var done = function (url) {
+                image.src = url;
+                $modal.modal('show');
+            };
+            var reader;
+            var file;
+            var url;
+
+            if (files && files.length > 0) {
+                file = files[0];
+
+                if (URL) {
+                    done(URL.createObjectURL(file));
+                } else if (FileReader) {
+                    reader = new FileReader();
+                    reader.onload = function (e) {
+                        done(reader.result);
+                    };
+                    reader.readAsDataURL(file);
+                }
+                $("#finisher-img").attr('src', ``);
+                $('#download_lnk1').css('display', 'none');
+                $('#cpc_credit').css('display', 'none');
+                $('#disclaim').css('display', 'none');
+                $('#show_error').css('display', 'none');
+            }
+
+        });
+
+        $modal.on('shown.bs.modal', function () {
+            cropper = new Cropper(image, {
+                aspectRatio: 9 / 16,
+                viewMode: 3,
+                preview: '.preview',
+                imageSmoothingEnabled: true,
+                imageSmoothingQuality: 'high',
+            });
+        }).on('hidden.bs.modal', function () {
+            cropper.destroy();
+            cropper = null;
+            $(":file").val('');
+        });
+
+
+        $('input[type=radio][name=sel_style]').change(function () {
+            if (this.value == 'POST') {
+                cropper.destroy();
+                cropper = new Cropper(image, {
+                    viewMode: 3,
+                    aspectRatio: 1 / 1,
+                    preview: '.preview',
+                    imageSmoothingEnabled: true,
+                    imageSmoothingQuality: 'high',
+                });
+
+            }
+            else if (this.value == 'STORY') {
+                cropper.destroy();
+                cropper = new Cropper(image, {
+                    viewMode: 3,
+                    aspectRatio: 9 / 16,
+                    preview: '.preview',
+                    imageSmoothingEnabled: true,
+                    imageSmoothingQuality: 'high',
+                });
+            }
+            else if (this.value == 'CUSTOM') {
+                cropper.destroy();
+                cropper = new Cropper(image, {
+                    viewMode: 3,
+                    preview: '.preview',
+                    imageSmoothingEnabled: true,
+                    imageSmoothingQuality: 'high',
+                });
+            }
+        });
+
+        $("#crop").click(function () {
+
+            const bib = $("#bib-number").val();
+            const trans = $("#trans").val();
+            if (!bib) {
+                $('#show_error').css('display', 'inherit');
+                return;
+            }
+
+            $modal.modal('hide');
+            $('#spinner1').css('display', 'inherit');
+
+            canvas = cropper.getCroppedCanvas();
+            canvas.toBlob(function (blob) {
+                $.ajax({
+                    url2: `http://localhost:8080/jatre-finisher?bib=${bib}&trans=${trans}`,
+                    url: `https://blrsports-backend.el.r.appspot.com/jatre-finisher?bib=${bib}&trans=${trans}`,
+                    type: 'POST',
+                    data: blob,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        $("#finisher-img").attr('src', `${response}`)
+                            .css('display', 'block')
+                            .css('margin-left', 'auto').css('margin-right', 'auto');
+                        $('#spinner1').css('display', 'none');
+                        $('#downLoad_btn1').attr('href', `${response}`);
+                        $('#download_lnk1').css('display', 'inherit');
+                        $('#cpc_credit').css('display', 'inherit');
+                        $('#disclaim').css('display', 'inherit');
+                        $(":file").val('');
+                    },
+                    error: function (error) {
+                        $('#spinner1').css('display', 'none');
+
+                        if (error.status === 400 && error.responseText === 'Bib number not found!') {
+                            alert('Could not find Bib number. Please verify and retry!')
+                        } else {
+                            alert('Something went wrong ! Try again or write to reach@blrsports.org');
+                        }
+                        $(":file").val('');
+                    }
+                });
+            });
+        })
+    </script>
+</body>
+
+</html>
