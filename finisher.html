@@ -245,8 +245,8 @@
             canvas = cropper.getCroppedCanvas();
             canvas.toBlob(function (blob) {
                 $.ajax({
-                    url: `http://localhost:8080/jatre-finisher?bib=${bib}&trans=${trans}`,
-                    url2: `https://blrsports-backend.el.r.appspot.com/jatre-finisher?bib=${bib}&trans=${trans}`,
+                    url2: `http://localhost:8080/jatre-finisher?bib=${bib}&trans=${trans}`,
+                    url: `https://blrsports-backend.el.r.appspot.com/jatre-finisher?bib=${bib}&trans=${trans}`,
                     type: 'POST',
                     data: blob,
                     processData: false,
